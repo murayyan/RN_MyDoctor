@@ -1,16 +1,15 @@
 import React from 'react';
 import {StyleSheet, Text, View, Image} from 'react-native';
-import {DummyHospital} from '../../../assets';
 import {colors, fonts} from '../../../utils';
 
-const ListHospital = () => {
+const ListHospital = ({type, name, address, pic}) => {
   return (
     <View style={styles.container}>
-      <Image source={DummyHospital} style={styles.picture} />
+      <Image source={pic} style={styles.picture} />
       <View>
-        <Text style={styles.title}>Rumah Sakit</Text>
-        <Text style={styles.title}>Mitra Keluarga</Text>
-        <Text style={styles.address}>Jl. Soekarno Hatta</Text>
+        <Text style={styles.title}>{type}</Text>
+        <Text style={styles.title}>{name}</Text>
+        <Text style={styles.address}>{address}</Text>
       </View>
     </View>
   );
