@@ -7,11 +7,7 @@ import {colors, fonts} from '../../utils';
 const Chat = ({navigation}) => {
   return (
     <View style={styles.page}>
-      <Header
-        title="dr. Tamara"
-        type="dark-profile"
-        onPress={() => navigation.goBack()}
-      />
+      <Header type="dark-profile" onPress={() => navigation.goBack()} />
       <View style={styles.content}>
         <Text style={styles.chatDate}>Senin, 21 Maret, 2020</Text>
         <ChatItem isMe />

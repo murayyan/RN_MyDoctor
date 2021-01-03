@@ -9,7 +9,7 @@ import {
   RatedDoctor,
 } from '../../components';
 import {colors, fonts} from '../../utils';
-import {JSONCategoryDoctor} from '../../assets';
+import {DummyDoctor, JSONCategoryDoctor} from '../../assets';
 
 const Doctor = ({navigation}) => {
   return (
@@ -18,7 +18,7 @@ const Doctor = ({navigation}) => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.wrapperSection}>
             <Gap height={30} />
-            <HomeProfile />
+            <HomeProfile onPress={() => navigation.navigate('UserProfile')} />
             <Text style={styles.welcome}>
               Mau konsultasi dengan seiapa hari ini ?
             </Text>
@@ -42,8 +42,30 @@ const Doctor = ({navigation}) => {
           </View>
           <View style={styles.wrapperSection}>
             <Text style={styles.sectionLabel}>Top Rated Doctors</Text>
-            <RatedDoctor />
-            <RatedDoctor />
+            <RatedDoctor
+              name="dr. Tirta"
+              desc="dokter covid"
+              avatar={DummyDoctor}
+              onPress={() => {
+                navigation.navigate('DoctorProfile');
+              }}
+            />
+            <RatedDoctor
+              name="dr. Terawan"
+              desc="mantan menteri"
+              avatar={DummyDoctor}
+              onPress={() => {
+                navigation.navigate('DoctorProfile');
+              }}
+            />
+            <RatedDoctor
+              name="dr. Oz"
+              desc="umum"
+              avatar={DummyDoctor}
+              onPress={() => {
+                navigation.navigate('DoctorProfile');
+              }}
+            />
             <Text style={styles.sectionLabel}>Good News</Text>
           </View>
           <NewsItem />
