@@ -7,7 +7,7 @@ const IsMe = () => {
     <View style={styles.container}>
       <View style={styles.chatContent}>
         <Text style={styles.text}>
-          Ibu dokter, apakah memakan jeruk tiap hari itu buruk?
+          Dok, bagaimana perkembangan pembagian vaksin ?
         </Text>
       </View>
       <Text style={styles.date}>2.40 AM</Text>

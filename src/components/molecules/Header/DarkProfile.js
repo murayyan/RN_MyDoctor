@@ -9,8 +9,8 @@ const DarkProfile = ({onPress}) => {
     <View style={styles.container}>
       <Button type="icon-only" icon="back-light" onPress={onPress} />
       <View style={styles.content}>
-        <Text style={styles.name}>dr. Tamara</Text>
-        <Text style={styles.desc}>dokter sex</Text>
+        <Text style={styles.name}>dr. Tirta</Text>
+        <Text style={styles.desc}>dokter covid</Text>
       </View>
       <Image style={styles.avatar} source={DummyDoctor} />
     </View>
