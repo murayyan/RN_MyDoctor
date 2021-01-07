@@ -51,9 +51,9 @@ const Doctor = ({navigation}) => {
       .ref('doctor_categories/')
       .once('value')
       .then((res) => {
-        console.log('doc', res.val());
         if (res.val()) {
-          setDoctorCategories(res.val());
+          const filterData = res.val().filter((el) => el !== null);
+          setDoctorCategories(filterData);
         }
       })
       .catch((err) => {
@@ -67,7 +67,8 @@ const Doctor = ({navigation}) => {
       .once('value')
       .then((res) => {
         if (res.val()) {
-          setNews(res.val());
+          const filterData = res.val().filter((el) => el !== null);
+          setNews(filterData);
         }
       })
       .catch((err) => {
@@ -94,7 +95,7 @@ const Doctor = ({navigation}) => {
                     <DoctorCategory
                       key={item.id}
                       category={item.category}
-                      onPress={() => navigation.navigate('ChooseDoctor')}
+                      onPress={() => navigation.navigate('ChooseDoctor', item)}
                     />
                   );
                 })}
@@ -107,7 +108,7 @@ const Doctor = ({navigation}) => {
             {doctors.map((doctor) => {
               return (
                 <RatedDoctor
-                  key={doctor.uid}
+                  key={doctor.id}
                   name={doctor.data.fullName}
                   desc={doctor.data.category}
                   avatar={{uri: doctor.data.photo}}
