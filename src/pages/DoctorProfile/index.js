@@ -3,15 +3,23 @@ import {StyleSheet, View} from 'react-native';
 import {Header, Profile, ProfileItem, Button, Gap} from '../../components';
 import {colors} from '../../utils';
 
-const DoctorProfile = ({navigation}) => {
+const DoctorProfile = ({navigation, route}) => {
+  const dataDoctor = route.params;
   return (
     <View style={styles.page}>
       <Header title="Doctor Profile" onPress={() => navigation.goBack()} />
-      <Profile name="dr.tamara" desc="sex" />
+      <Profile
+        name={dataDoctor.data.fullName}
+        desc={dataDoctor.data.category}
+        photo={{uri: dataDoctor.data.photo}}
+      />
       <Gap height={10} />
-      <ProfileItem label="Alumnus" value="Universitas Indonesia 2005" />
-      <ProfileItem label="Tempat Praktik" value="RSU Saiful Anwar, Malang" />
-      <ProfileItem label="No. STR" value="0000912912800" />
+      <ProfileItem label="Alumnus" value={dataDoctor.data.university} />
+      <ProfileItem
+        label="Tempat Praktik"
+        value={dataDoctor.data.hospital_address}
+      />
+      <ProfileItem label="No. STR" value={dataDoctor.data.str_number} />
       <View style={styles.action}>
         <Button
           title="Start Consultation"

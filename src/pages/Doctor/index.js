@@ -112,7 +112,7 @@ const Doctor = ({navigation}) => {
                   desc={doctor.data.category}
                   avatar={{uri: doctor.data.photo}}
                   onPress={() => {
-                    navigation.navigate('DoctorProfile');
+                    navigation.navigate('DoctorProfile', doctor);
                   }}
                 />
               );
