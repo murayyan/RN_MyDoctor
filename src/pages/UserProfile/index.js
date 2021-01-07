@@ -3,6 +3,8 @@ import {StyleSheet, View} from 'react-native';
 import {ILNullPhoto} from '../../assets';
 import {Gap, Header, List, Profile} from '../../components';
 import {colors, getData} from '../../utils';
+import {Fire} from '../../config';
+import {showMessage} from 'react-native-flash-message';
 
 const UserProfile = ({navigation}) => {
   const [profile, setProfile] = useState({
@@ -17,6 +19,21 @@ const UserProfile = ({navigation}) => {
       setProfile(data);
     });
   }, []);
+
+  const signOut = () => {
+    Fire.auth()
+      .signOut()
+      .then((res) => {
+        navigation.replace('GetStarted');
+      })
+      .catch((err) => {
+        showMessage({
+          message: err.message,
+          type: 'default',
+          color: colors.error,
+        });
+      });
+  };
   return (
     <View style={styles.page}>
       <Header
@@ -48,7 +65,13 @@ const UserProfile = ({navigation}) => {
         icon="language"
       />
       <List name="Rate" msg="Last Update Yesterday" type="next" icon="rate" />
-      <List name="Help" msg="Last Update Yesterday" type="next" icon="help" />
+      <List
+        name="Sign Out"
+        msg="Last Update Yesterday"
+        type="next"
+        icon="help"
+        onPress={signOut}
+      />
     </View>
   );
 };

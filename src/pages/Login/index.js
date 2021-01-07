@@ -1,29 +1,27 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, Text, View} from 'react-native';
 import {ILLogo} from '../../assets';
-import {Button, Gap, Input, Link, Loading} from '../../components/';
+import {Button, Gap, Input, Link} from '../../components/';
 import {colors, fonts, storeData, useForm} from '../../utils';
 import {Fire} from '../../config';
-import {showMessage} from 'react-native-flash-message';
 import {ScrollView} from 'react-native-gesture-handler';
+import {useDispatch} from 'react-redux';
+import {showError} from '../../utils/';
 
 const Login = ({navigation}) => {
   const [form, setForm] = useForm({email: '', password: ''});
-  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const login = () => {
-    console.log('form', form);
-    setLoading(true);
+    dispatch({type: 'SET_LOADING', value: true});
     Fire.auth()
       .signInWithEmailAndPassword(form.email, form.password)
       .then((res) => {
-        console.log('success', res);
-        setLoading(false);
+        dispatch({type: 'SET_LOADING', value: false});
         Fire.database()
           .ref(`users/${res.user.uid}/`)
           .once('value')
           .then((resDB) => {
-            console.log('data user:', resDB.val());
             if (resDB.val()) {
               storeData('user', resDB.val());
               navigation.replace('MainApp');
@@ -31,14 +29,8 @@ const Login = ({navigation}) => {
           });
       })
       .catch((err) => {
-        console.log('error:', err);
-        setLoading(false);
-        showMessage({
-          message: err.message,
-          type: 'default',
-          backgroundColor: colors.error,
-          color: colors.white,
-        });
+        dispatch({type: 'SET_LOADING', value: false});
+        showError(err.message);
       });
   };
   return (
@@ -75,7 +67,6 @@ const Login = ({navigation}) => {
           />
         </ScrollView>
       </View>
-      {loading && <Loading />}
     </>
   );
 };

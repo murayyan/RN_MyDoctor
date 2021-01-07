@@ -17,6 +17,7 @@ const HomeProfile = ({onPress}) => {
       setProfile(res);
     });
   }, []);
+
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={profile.photo} style={styles.avatar} />
