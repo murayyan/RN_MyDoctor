@@ -20,31 +20,34 @@ const Chat = ({navigation, route}) => {
 
   useEffect(() => {
     getUser();
+    console.log('tes', `${user.uid}_${dataDoctor.data.uid}`);
     const chatID = `${user.uid}_${dataDoctor.data.uid}`;
     const urlFirebase = `chatting/${chatID}/allChat/`;
     Fire.database()
       .ref(urlFirebase)
       .on('value', (snapshot) => {
-        const dataSnapshot = snapshot.val();
-        const allChat = [];
-        Object.keys(dataSnapshot).map((key) => {
-          const chat = dataSnapshot[key];
-          const newChat = [];
+        if (snapshot.val()) {
+          const dataSnapshot = snapshot.val();
+          const allChat = [];
+          Object.keys(dataSnapshot).map((key) => {
+            const chat = dataSnapshot[key];
+            const newChat = [];
 
-          Object.keys(chat).map((itemChat) => {
-            newChat.push({
-              id: itemChat,
-              data: chat[itemChat],
+            Object.keys(chat).map((itemChat) => {
+              newChat.push({
+                id: itemChat,
+                data: chat[itemChat],
+              });
+            });
+
+            allChat.push({
+              id: key,
+              data: newChat,
             });
           });
-
-          allChat.push({
-            id: key,
-            data: newChat,
-          });
-        });
-        console.log('chat', allChat);
-        setChatData(allChat);
+          console.log('chat', allChat);
+          setChatData(allChat);
+        }
       });
   }, [user.uid, dataDoctor.data.uid]);
 
@@ -64,11 +67,25 @@ const Chat = ({navigation, route}) => {
     };
     const chatID = `${user.uid}_${dataDoctor.data.uid}`;
     const urlFirebase = `chatting/${chatID}/allChat/${getDate(today)}`;
+    const urlMessageUser = `messages/${user.uid}/${chatID}`;
+    const urlMessageDoctor = `messages/${dataDoctor.data.uid}/${chatID}`;
+    const dataHistoryChatForUser = {
+      lastContentChat: chatContent,
+      lastChatDate: today.getTime(),
+      uidPartner: dataDoctor.data.uid,
+    };
+    const dataHistoryChatForDoctor = {
+      lastContentChat: chatContent,
+      lastChatDate: today.getTime(),
+      uidPartner: user.uid,
+    };
     Fire.database()
       .ref(urlFirebase)
       .push(data)
       .then(() => {
         setChatContent('');
+        Fire.database().ref(urlMessageUser).set(dataHistoryChatForUser);
+        Fire.database().ref(urlMessageDoctor).set(dataHistoryChatForDoctor);
       })
       .catch((err) => {
         showError(err.message);
